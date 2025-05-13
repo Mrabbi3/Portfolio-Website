@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Journey - MD RABBI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Preload dark mode to prevent flash -->
+    <script>
+        (function() {
+            // Get the theme from localStorage
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Apply theme immediately
+            if (savedTheme) {
+                document.querySelector('html').setAttribute('data-theme', savedTheme);
+            } else if (prefersDark) {
+                document.querySelector('html').setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">MD RABBI</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="journey.html" class="active">My Journey</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="video-background">
+            <video autoplay muted loop id="hero-video">
+                <source src="1918465-uhd_3840_2160_24fps.mp4" type="video/mp4">
+                <!-- Fallback image if video doesn't load -->       
+                <img src="IMG_4354.JPG" alt="Background Image">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h2>My Journey</h2>
+                <p class="subtitle">The path that led me to where I am today</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline-section">
+        <div class="container">
+            <div class="timeline">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2025</div>
+                    <div class="timeline-content">
+                        <h3>Student Worker</h3>
+                        <h4>Stockton University</h4>
+                        <p>I started my role as a Student Worker in various departments of Stockton University which includes Dean of Students office, Osprey Pantry and research institute.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2024</div>
+                    <div class="timeline-content">
+                        <h3>Resident Assistant</h3>
+                        <h4>Stockton University</h4>
+                        <p>I became a resident assistant for Stockton University. I was able to learn a lot about the responsibilities of a resident assistant and how to handle the residents.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content">
+                        <h3>Workshop Tutor</h3>
+                        <h4>Stockton University</h4>
+                        <p>I was a tutor for a workshop on Mathematics. I was able to help the students understand the concepts of Mathematics and how to apply them in real life problems.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2023</div>
+                    <div class="timeline-content">
+                        <h3>Bachelor's Degree in Computer Science</h3>
+                        <h4>Stockton University</h4>
+                        <p>I Started my higher education in Stockton University in New Jersey. One of my life changing decision was to come to US for higher education. I learned a lot about myself and my capabilities. I was able to build a strong foundation in Computer Science and Mathematics.</p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2019</div>
+                    <div class="timeline-content">
+                        <h3>First Work Experience</h3>
+                        <h4>Sangram Textile</h4>
+                        <p>My First work experience in my Family Business where I learned important rules of business and how to deal with clients. For technical Part I used HTML, CSS, JavaScript to build a simple website for the company.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="milestones">
+        <div class="container">
+            <h2 class="section-title">Key Milestones</h2>
+            <div class="milestones-grid">
+                <div class="milestone-card">
+                    <div class="milestone-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Dean's List</h3>
+                    <p>Received recognition for outstanding academic performance in the Fall 2023, Spring 2024 and Spring 2025.</p>
+                    <a href="https://www.linkedin.com/in/md-rabbi3/details/honors/" class="btn-small">View More</a>
+                </div>
+                
+                <div class="milestone-card">
+                    <div class="milestone-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Certification</h3>
+                    <p>Earned certification in Advanced JavaScript and React Development.</p>
+                </div>
+                
+                <div class="milestone-card">
+                    <div class="milestone-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Leadership Awards</h3>
+                    <p>Received leadership awards for my contributions to the community and the university.</p>
+                    <a href="https://www.linkedin.com/in/md-rabbi3/details/honors/" class="btn-small">View More</a>
+                </div>
+                
+                <div class="milestone-card">
+                    <div class="milestone-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Hackathons</h3>
+                    <p>Successfully completed HenHack 2024 and presented my project in the hackathon.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>MD RABBI</h2>
+                    <p>Web Developer & Designer</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/Mrabbi3"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/md-rabbi3/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.youtube.com/@FLOCKY144"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 MD RABBI. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+</body>
+</html> 

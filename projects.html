@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - MD RABBI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Preload dark mode to prevent flash -->
+    <script>
+        (function() {
+            // Get the theme from localStorage
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            // Apply theme immediately
+            if (savedTheme) {
+                document.querySelector('html').setAttribute('data-theme', savedTheme);
+            } else if (prefersDark) {
+                document.querySelector('html').setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1 class="logo">MD RABBI</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="projects.html" class="active">Projects</a></li>
+                    <li><a href="journey.html">My Journey</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="video-background">
+            <video autoplay muted loop id="hero-video">
+                <source src="1918465-uhd_3840_2160_24fps.mp4" type="video/mp4">
+                <!-- Fallback image if video doesn't load -->       
+                <img src="IMG_4354.JPG" alt="Background Image">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h2>My Projects</h2>
+                <p class="subtitle">A collection of my work and personal projects</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="projects-section">
+        <div class="container">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="web">Web Development</button>
+                <button class="filter-btn" data-filter="design">Design</button>
+                <button class="filter-btn" data-filter="app">Mobile Apps</button>
+            </div>
+            
+            <div class="projects-grid">
+                <!-- All Matters Project (from homepage) -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="au10-m6LJXBQX8vILM24Q.avif" alt="All Matters">
+                    </div>
+                    <div class="project-info">
+                        <h3>All Matters</h3>
+                        <p>All Matters is made for childrens with speciality needs. It is a website that provides information about the childrens with speciality needs and their families.</p>
+                        <div class="project-tags">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://allmaters.com/" class="btn-small">View Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DeathStar 3D Project (from homepage) -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="018c53a1-ef60-48dd-940c-c919052530d8_960x640.webp" alt="DeathStar 3D">
+                    </div>
+                    <div class="project-info">
+                        <h3>DeathStar 3D</h3>
+                        <p>DeathStar 3D is a 3D game using Three.js. It has amazing 3D effects and animations which makes it more interesting.</p>
+                        <div class="project-tags">
+                            <span>React</span>
+                            <span>Node.js</span>
+                            <span>Three.js</span>
+                            <span>Html</span>
+                            <span>Css</span>
+                            <span>JavaScript</span>
+                            <span>Python</span>
+                            <span>typescript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/Mrabbi3/DeathStar-3D-Game" class="btn-small">View Project</a>
+                            <a href="https://github.com/Mrabbi3/DeathStar-3D-Game" class="btn-small secondary">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Portfolio Website -->
+                <div class="project-card" data-category="web">
+                    <div class="project-image">
+                        <img src="https://via.placeholder.com/400x300" alt="Portfolio Website">
+                    </div>
+                    <div class="project-info">
+                        <h3>Portfolio Website</h3>
+                        <p>A responsive portfolio website showcasing my skills and projects.</p>
+                        <div class="project-tags">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="btn-small">View Project</a>
+                            <a href="#" class="btn-small secondary">Source Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>MD RABBI</h2>
+                    <p>Web Developer & Designer</p>
+                </div>
+                <div class="social-links">
+                    <a href="https://github.com/Mrabbi3"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/md-rabbi3/"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.youtube.com/@FLOCKY144"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 MD RABBI. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="chatbot.js"></script>
+</body>
+</html> 
