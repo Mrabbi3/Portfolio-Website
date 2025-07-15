@@ -3,47 +3,68 @@ const chatbot = {
     // Configuration
     apiEndpoint: 'https://api.openai.com/v1/chat/completions',
     model: 'gpt-3.5-turbo',
-    apiKey: '', // You'll need to add your API key here
-    useLocalOnly: true, // Set to false to use OpenAI API instead of local responses
+    apiKey: '', // <-- Insert your OpenAI API key here or use a secure environment variable in production
+    useLocalOnly: false, // Set to true to use local responses instead of ChatGPT API
+    maxTokens: 500,
+    temperature: 0.7,
+    maxConversationLength: 10, // Maximum number of messages to keep in context
     
     // State
     isOpen: false,
     messages: [
-        { role: 'system', content: `You are a helpful assistant for MD RABBI's portfolio website. 
-        Answer questions about MD RABBI, who is a Software Engineer & AI Developer.
-        Be friendly, concise, and professional. If you don't know the answer to a question, 
-        suggest that the visitor contact MD RABBI directly. Mention that you're an AI assistant.` }
+        { 
+            role: 'system', 
+            content: `You are MD RABBI's intelligent AI assistant on his portfolio website. 
+
+ABOUT MD RABBI:
+- Software Engineer & AI Developer
+- Passionate computer science student interested in AI, Machine Learning, and software development
+- Skills: HTML5, CSS3, JavaScript, React, Node.js, Java, Python, C++, C#, SQL, Git, GitHub, LLM, ML, AI
+- Looking for internship opportunities to gain more experience
+- Projects include: All Matters (website for children with special needs), DeathStar 3D (3D game using Three.js)
+- Contact: LinkedIn (https://www.linkedin.com/in/md-rabbi3/), GitHub (https://github.com/Mrabbi3), YouTube (@FLOCKY144)
+
+INSTRUCTIONS:
+- Be friendly, professional, and concise
+- Answer questions about MD RABBI's background, skills, projects, and experience
+- If asked about specific details not provided, suggest contacting MD RABBI directly
+- Always mention you're an AI assistant when introducing yourself
+- Help visitors navigate the website and understand MD RABBI's work
+- Be encouraging about MD RABBI's career goals and internship search
+- Keep responses under 100 words unless more detail is specifically requested` 
+        }
     ],
+    conversationHistory: [], // Separate array to track full conversation for context
     
-    // Local responses for common questions
+    // Local responses for common questions (fallback when API is unavailable)
     localResponses: [
         {
             keywords: ['hi', 'hello', 'hey', 'greetings'],
-            response: "Hello! I'm MD RABBI's AI assistant. How can I help you today?"
+            response: "Hello! I'm MD RABBI's AI assistant. How can I help you today? 🤖"
         },
         {
             keywords: ['who', 'rabbi', 'about'],
-            response: "MD RABBI is a Software Engineer & AI Developer with expertise in web development and AI technologies. He's passionate about building innovative solutions using modern technologies."
+            response: "MD RABBI is a Software Engineer & AI Developer with expertise in web development and AI technologies. He's a passionate computer science student currently seeking internship opportunities to further develop his skills."
         },
         {
             keywords: ['skills', 'technologies', 'tech stack', 'programming'],
-            response: "MD RABBI is skilled in HTML5, CSS3, JavaScript, React, Node.js, Java, Python, C++, C#, SQL, Git, GitHub, Machine Learning, and AI technologies."
+            response: "MD RABBI is skilled in HTML5, CSS3, JavaScript, React, Node.js, Java, Python, C++, C#, SQL, Git, GitHub, Machine Learning, and AI technologies. He's particularly passionate about AI and web development."
         },
         {
             keywords: ['contact', 'email', 'reach', 'connect'],
-            response: "You can reach out to MD RABBI through the contact form on this website. Alternatively, you can connect with him on LinkedIn at https://www.linkedin.com/in/md-rabbi3/ or check out his GitHub at https://github.com/Mrabbi3."
+            response: "You can reach MD RABBI through the contact form on this website, connect on LinkedIn (https://www.linkedin.com/in/md-rabbi3/), or check out his GitHub (https://github.com/Mrabbi3)."
         },
         {
             keywords: ['projects', 'work', 'portfolio'],
-            response: "MD RABBI has worked on various projects including All Matters, a website for children with special needs, and DeathStar 3D, a 3D game using Three.js. You can find more details about his projects on the Projects page."
+            response: "MD RABBI has worked on projects like All Matters (a website for children with special needs) and DeathStar 3D (a 3D game using Three.js). Check out the Projects page for more details!"
         },
         {
             keywords: ['education', 'background', 'degree', 'university'],
             response: "For specific details about MD RABBI's educational background, please check his Resume page or contact him directly."
         },
         {
-            keywords: ['experience', 'work experience', 'job', 'career'],
-            response: "For details about MD RABBI's professional experience, please check his Resume page or reach out to him directly through the contact form."
+            keywords: ['internship', 'job', 'career', 'opportunity'],
+            response: "MD RABBI is actively seeking internship opportunities to gain more experience in software engineering and AI development. Feel free to reach out through the contact form if you have opportunities!"
         },
         {
             keywords: ['resume', 'cv', 'download'],
@@ -51,7 +72,7 @@ const chatbot = {
         },
         {
             keywords: ['thanks', 'thank you', 'thx'],
-            response: "You're welcome! If you have any more questions about MD RABBI or his work, feel free to ask. I'm here to help!"
+            response: "You're welcome! If you have any more questions about MD RABBI or his work, feel free to ask. I'm here to help! 🤖"
         }
     ],
     
@@ -252,7 +273,7 @@ const chatbot = {
         return "I'm not sure I understand. Could you rephrase your question? Alternatively, you can contact MD RABBI directly through the contact form for more specific information.";
     },
     
-    // Send message
+    // Send message with enhanced error handling
     sendMessage: async function() {
         const messageText = this.elements.inputField.value.trim();
         
@@ -260,6 +281,10 @@ const chatbot = {
         if (messageText === '') {
             return;
         }
+        
+        // Disable input while processing
+        this.elements.inputField.disabled = true;
+        this.elements.sendButton.disabled = true;
         
         // Add user message to chat
         this.addMessage('user', messageText);
@@ -273,13 +298,13 @@ const chatbot = {
         try {
             let response;
             
-            // Use local response or API based on configuration
+            // Use local response or ChatGPT API based on configuration
             if (this.useLocalOnly) {
                 // Simulate API delay for a more natural experience
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                await new Promise(resolve => setTimeout(resolve, 1000 + Math.random() * 1000));
                 response = this.getLocalResponse(messageText);
             } else {
-                // Call API to get response
+                // Call ChatGPT API to get response
                 response = await this.getAIResponse(messageText);
             }
             
@@ -288,28 +313,43 @@ const chatbot = {
             
             // Add AI response to chat
             this.addMessage('assistant', response);
+            
         } catch (error) {
             // Remove loading message
             this.removeLastMessage();
             
             // Add error message to chat
-            this.addMessage('assistant', 'Sorry, I encountered an error. Please try again or contact MD RABBI directly.');
+            this.addMessage('assistant', 'Sorry, I encountered an error while processing your request. Please try again or contact MD RABBI directly through the contact form.');
             console.error('Chatbot error:', error);
+        } finally {
+            // Re-enable input
+            this.elements.inputField.disabled = false;
+            this.elements.sendButton.disabled = false;
+            this.elements.inputField.focus();
         }
     },
     
-    // Get AI response
+    // Get AI response with enhanced error handling and context management
     getAIResponse: async function(userMessage) {
-        // Add user message to messages array
-        this.messages.push({ role: 'user', content: userMessage });
+        // Add user message to conversation history
+        this.conversationHistory.push({ role: 'user', content: userMessage });
+        
+        // Manage conversation length to stay within token limits
+        this.manageConversationContext();
         
         // Check if API key is provided
-        if (!this.apiKey) {
-            return "API key not configured. Please contact the website owner to set up the chatbot properly.";
+        if (!this.apiKey || this.apiKey.trim() === '') {
+            return "ChatGPT API key not configured. Please add your API key to enable AI responses, or I can help with basic questions using my local knowledge base.";
         }
         
         try {
-            // Call OpenAI API
+            // Prepare messages for API call (system message + recent conversation)
+            const apiMessages = [
+                this.messages[0], // System message
+                ...this.conversationHistory.slice(-this.maxConversationLength)
+            ];
+            
+            // Call ChatGPT API
             const response = await fetch(this.apiEndpoint, {
                 method: 'POST',
                 headers: {
@@ -318,27 +358,92 @@ const chatbot = {
                 },
                 body: JSON.stringify({
                     model: this.model,
-                    messages: this.messages,
-                    max_tokens: 500,
-                    temperature: 0.7
+                    messages: apiMessages,
+                    max_tokens: this.maxTokens,
+                    temperature: this.temperature,
+                    presence_penalty: 0.1,
+                    frequency_penalty: 0.1
                 })
             });
             
             // Parse response
             const data = await response.json();
             
-            // Check for errors
+            // Handle API errors
             if (!response.ok) {
-                console.error('API error:', data);
-                throw new Error(data.error?.message || 'Unknown API error');
+                console.error('ChatGPT API error:', data);
+                
+                // Handle specific error types
+                if (response.status === 401) {
+                    return "Invalid API key. Please check your ChatGPT API key configuration.";
+                } else if (response.status === 429) {
+                    return "API rate limit exceeded. Please try again in a moment.";
+                } else if (response.status === 500) {
+                    return "ChatGPT service is temporarily unavailable. Let me help with local responses instead.";
+                }
+                
+                throw new Error(data.error?.message || `API error: ${response.status}`);
             }
             
-            // Extract and return assistant's message
+            // Extract assistant's message
             const assistantMessage = data.choices[0].message.content;
+            
+            // Add assistant's response to conversation history
+            this.conversationHistory.push({ role: 'assistant', content: assistantMessage });
+            
             return assistantMessage;
+            
         } catch (error) {
-            console.error('API call error:', error);
-            throw error;
+            console.error('ChatGPT API call error:', error);
+            
+            // Fallback to local response if API fails
+            console.log('Falling back to local responses...');
+            return this.getLocalResponse(userMessage) + " (Note: AI assistant is temporarily unavailable)";
+        }
+    },
+    
+    // Manage conversation context to stay within token limits
+    manageConversationContext: function() {
+        // Keep only the most recent messages to manage token usage
+        if (this.conversationHistory.length > this.maxConversationLength) {
+            this.conversationHistory = this.conversationHistory.slice(-this.maxConversationLength);
+        }
+    },
+    
+    // Clear conversation history (useful for starting fresh)
+    clearConversation: function() {
+        this.conversationHistory = [];
+        console.log('Conversation history cleared');
+    },
+    
+    // Get conversation statistics
+    getConversationStats: function() {
+        return {
+            totalMessages: this.conversationHistory.length,
+            apiKeyConfigured: this.apiKey && this.apiKey.trim() !== '',
+            usingLocalOnly: this.useLocalOnly,
+            model: this.model
+        };
+    },
+    
+    // Test API connection (for debugging)
+    testAPIConnection: async function() {
+        console.log('🧪 Testing ChatGPT API connection...');
+        console.log('API Key configured:', this.apiKey ? 'Yes' : 'No');
+        console.log('Using local only:', this.useLocalOnly);
+        
+        if (!this.apiKey || this.apiKey.trim() === '') {
+            console.log('❌ No API key configured');
+            return false;
+        }
+        
+        try {
+            const testResponse = await this.getAIResponse('Hello, can you hear me?');
+            console.log('✅ API Test Response:', testResponse);
+            return true;
+        } catch (error) {
+            console.log('❌ API Test Failed:', error);
+            return false;
         }
     }
 };
@@ -347,3 +452,5 @@ const chatbot = {
 document.addEventListener('DOMContentLoaded', () => {
     chatbot.init();
 }); 
+
+chatbot.testAPIConnection()

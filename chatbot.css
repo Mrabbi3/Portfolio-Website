@@ -1,6 +1,6 @@
 /* Chatbot Styles */
 :root {
-    --chatbot-primary-color: #ff5722; /* Match your website primary color */
+    --chatbot-primary-color: #8f5cff; /* Match new violet accent color */
     --chatbot-light-color: #ffffff;
     --chatbot-dark-color: #222222;
     --chatbot-bg-color: #f9f9f9;
@@ -189,7 +189,7 @@
 
 .chatbot-send:hover {
     transform: scale(1.1);
-    background-color: #e64a19; /* Darker shade */
+    background-color: #6c2bd7; /* Darker shade of violet */
 }
 
 .chatbot-send i {

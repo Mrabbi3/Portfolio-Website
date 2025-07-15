@@ -1,70 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Theme Toggle Functionality
-    const initThemeToggle = () => {
-        console.log("Initializing theme toggle"); // Debug log
-        // Check for saved theme preference or use preferred color scheme
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        
-        console.log("Saved theme:", savedTheme); // Debug log
-        console.log("Prefers dark:", prefersDark); // Debug log
-        
-        // Set initial theme - using document.querySelector('html') to be explicit
-        if (savedTheme) {
-            document.querySelector('html').setAttribute('data-theme', savedTheme);
-            console.log("Applied saved theme:", savedTheme); // Debug log
-        } else if (prefersDark) {
-            document.querySelector('html').setAttribute('data-theme', 'dark');
-            localStorage.setItem('theme', 'dark');
-            console.log("Applied system preferred dark theme"); // Debug log
-        }
-        
-        // Create theme toggle if it doesn't exist
-        if (!document.querySelector('.theme-toggle')) {
-            const toggleBtn = document.createElement('div');
-            toggleBtn.className = 'theme-toggle';
-            toggleBtn.setAttribute('title', 'Toggle dark mode');
-            toggleBtn.innerHTML = getCurrentTheme() === 'dark' ? 
-                '<i class="fas fa-sun"></i>' : 
-                '<i class="fas fa-moon"></i>';
-            
-            // Insert after nav
-            const navContainer = document.querySelector('header .container');
-            navContainer.appendChild(toggleBtn);
-            
-            // Add event listener
-            toggleBtn.addEventListener('click', toggleTheme);
-            console.log("Theme toggle button created"); // Debug log
-        }
-    };
-    
-    // Get current theme
-    const getCurrentTheme = () => {
-        return document.querySelector('html').getAttribute('data-theme') || 'light';
-    };
-    
-    // Toggle theme
-    const toggleTheme = () => {
-        const currentTheme = getCurrentTheme();
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        console.log("Toggling theme from", currentTheme, "to", newTheme); // Debug log
-        
-        // Set theme - using document.querySelector('html') to be explicit
-        document.querySelector('html').setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        
-        // Update toggle icon
-        const toggleBtn = document.querySelector('.theme-toggle');
-        toggleBtn.innerHTML = newTheme === 'dark' ? 
-            '<i class="fas fa-sun"></i>' : 
-            '<i class="fas fa-moon"></i>';
-            
-        console.log("Theme toggled to", newTheme); // Debug log
-    };
-    
-    // Initialize theme toggle
-    initThemeToggle();
+    // All theme toggle and switching logic removed. File can be left empty or only with unrelated scripts.
     
     // Mobile Navigation Toggle
     const createMobileNav = () => {
@@ -256,4 +191,22 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Call animate function
     animateOnScroll();
+}); 
+
+// Header transparency on scroll over hero section
+window.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('header');
+    const hero = document.querySelector('.hero');
+    function updateHeaderTransparency() {
+        if (!header || !hero) return;
+        const heroRect = hero.getBoundingClientRect();
+        if (heroRect.bottom > header.offsetHeight + 10) {
+            header.classList.add('transparent-header');
+        } else {
+            header.classList.remove('transparent-header');
+        }
+    }
+    updateHeaderTransparency();
+    window.addEventListener('scroll', updateHeaderTransparency);
+    window.addEventListener('resize', updateHeaderTransparency);
 }); 

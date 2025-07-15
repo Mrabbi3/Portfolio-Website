@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,21 +8,27 @@
     <link rel="stylesheet" href="chatbot.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Preload dark mode to prevent flash -->
-    <script>
-        (function() {
-            // Get the theme from localStorage
-            const savedTheme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            
-            // Apply theme immediately
-            if (savedTheme) {
-                document.querySelector('html').setAttribute('data-theme', savedTheme);
-            } else if (prefersDark) {
-                document.querySelector('html').setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        })();
-    </script>
+    <style>
+@keyframes letter-fade-violet-white {
+  0% { color: #8f5cff; opacity: 1; }
+  50% { color: #fff; opacity: 0.7; }
+  100% { color: #8f5cff; opacity: 1; }
+}
+.interactive-quote {
+  font-size: 2rem;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 32px 0 0 0;
+  border-radius: 8px;
+  display: inline-block;
+  background: none;
+  text-shadow: none;
+}
+.interactive-quote span {
+  display: inline-block;
+  animation: letter-fade-violet-white 2s infinite alternate;
+}
+</style>
 </head>
 <body>
     <header>
@@ -33,7 +39,7 @@
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="projects.html">Projects</a></li>
                     <li><a href="journey.html">My Journey</a></li>
-                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="charity.html">Charity</a></li>
                     <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
@@ -42,11 +48,7 @@
 
     <section class="hero">
         <div class="video-background">
-            <video autoplay muted loop id="hero-video">
-                <source src="1918465-uhd_3840_2160_24fps.mp4" type="video/mp4">
-                <!-- Fallback image if video doesn't load -->       
-                <img src="IMG_4354.JPG" alt="Background Image">
-            </video>
+            <img src="IMG_4354.JPG" alt="Beach Silhouette" id="hero-image" style="width:100%;height:100%;object-fit:cover;">
             <div class="video-overlay"></div>
         </div>
         <div class="container">
@@ -58,83 +60,52 @@
         </div>
     </section>
 
-    <section class="about" id="about">
-        <div class="container">
-            <h2 class="section-title">About Me</h2>
-            <div class="about-content">
-                <div class="about-image">
-                    <img src="IMG_0746 3.jpeg" alt="Your Name">
-                </div>
-                <div class="about-text">
-                    <p>Welcome to my portfolio! I am a passionate computer science student with a keen interest in Ai and Machine Learning and software development. Also I am good at web development and design. I am a quick learner and I am always looking for new challenges.</p>
-                    <p>My goal is to become a software engineer and I am working hard to achieve my goal. Currently I am looking for internship to gain more experience and knowledge. Thanks!</p>
-                    <div class="skills">
-                        <h3>My Skills</h3>
-                        <div class="skill-tags">
-                            <span>HTML5</span>
-                            <span>CSS3</span>
-                            <span>JavaScript</span>
-                            <span>React</span>
-                            <span>Node.js</span>
-                            <span>Java</span>
-                            <span>Python</span>
-                            <span>C++</span>
-                            <span>C#</span>
-                            <span>SQL</span>
-                            <span>Git</span>
-                            <span>GitHub</span>
-                            <span> LLM </span>
-                            <span> ML </span>
-                            <span> AI </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Add two images with quotes section -->
+    <section class="image-quote-section">
+      <div class="container" style="display:flex;flex-direction:column;gap:48px;justify-content:center;align-items:center;margin:60px auto;">
+        <div style="width:100%;max-width:400px;text-align:center;">
+          <img src="5854298B-4780-4C69-BCE3-955BF38A91E3.PNG" alt="Look 1" style="width:100%;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.15);">
+          <blockquote class="interactive-quote">“Elegance is not about being noticed, it’s about being remembered.”</blockquote>
         </div>
+        <div style="width:100%;max-width:400px;text-align:center;">
+          <img src="C2DDB8EA-46F3-41B8-9608-4E34A2DE93BC.PNG" alt="Look 2" style="width:100%;border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.15);">
+          <blockquote class="interactive-quote">“Style is a way to say who you are without having to speak.”</blockquote>
+        </div>
+      </div>
     </section>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Letter-by-letter animation for quotes
+      document.querySelectorAll('.interactive-quote').forEach(function(quote) {
+        var text = quote.textContent;
+        quote.innerHTML = '';
+        for (let i = 0; i < text.length; i++) {
+          const span = document.createElement('span');
+          span.textContent = text[i];
+          span.style.animationDelay = (i * 0.06) + 's';
+          quote.appendChild(span);
+        }
+      });
+      var slider = document.getElementById('compare-slider');
+      var overlay = document.getElementById('compare-overlay');
+      if (slider && overlay) {
+        slider.addEventListener('input', function() {
+          overlay.style.width = slider.value + '%';
+        });
+      }
+    });
+    </script>
 
-    <section class="featured-projects">
+    <!-- Add Resume section from resume.html -->
+    <section class="resume-section">
         <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="au10-m6LJXBQX8vILM24Q.avif" alt="All Matters">
-                    </div>
-                    <div class="project-info">
-                        <h3>All Matters</h3>
-                        <p> All Matters is made for childrens with speciality needs. It is a website that provides information about the childrens with speciality needs and their families.</p>
-                        <div class="project-tags">
-                            <span>HTML</span>
-                            <span>CSS</span>
-                            <span>JavaScript</span>
-                        </div>
-                        <a href="https://allmaters.com/" class="btn-small">View Project</a>
-                    </div>
+            <div class="resume-info">
+                <p>Thank you for your interest in my professional background. You can download my resume using the button below or view it online.</p>
+                <div class="resume-buttons">
+                    <a href="https://drive.google.com/file/d/1pkd09YYqiFDeB0E7iOkY-baiqibolE61/view?usp=sharing" class="btn download-btn"><i class="fas fa-download"></i> Download PDF</a>
+                    <a href="https://drive.google.com/file/d/1pkd09YYqiFDeB0E7iOkY-baiqibolE61/view?usp=sharing" class="btn view-btn"><i class="fas fa-eye"></i> View Online</a>
                 </div>
-                <div class="project-card">
-                    <div class="project-image">
-                        <img src="018c53a1-ef60-48dd-940c-c919052530d8_960x640.webp" alt="DeathStar 3D">
-                    </div>
-                    <div class="project-info">
-                        <h3>DeathStar 3D</h3>
-                        <p>DeathStar 3D is a 3D game using Three.js. It has amazing 3D effects and animations which makes it more interesting.</p>
-                        <div class="project-tags">
-                            <span>React</span>
-                            <span>Node.js</span>
-                            <span>Three.js</span>
-                            <span>Html</span>
-                            <span>Css</span>
-                            <span>JavaScript</span>
-                            <span>Python</span>
-                            <span>typescript</span>
-                        </div>
-                        <a href="https://github.com/Mrabbi3/DeathStar-3D-Game" class="btn-small">View Project</a>
-                    </div>
-                </div>
-            </div>
-            <div class="center">
-                <a href="projects.html" class="btn">View All Projects</a>
+                <p>For any questions about my experience or qualifications, please feel free to <a href="contact.html">contact me</a>.</p>
             </div>
         </div>
     </section>
